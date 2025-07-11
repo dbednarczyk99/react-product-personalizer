@@ -1,7 +1,7 @@
 import styles from './Product.module.scss';
 import ProductForm from '../ProductForm/ProductForm';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import ProductImage from '../ProductImage/ProductImage';
 
 const Product = props => {
@@ -11,10 +11,10 @@ const Product = props => {
 
   const productName = `${props.name[0].toUpperCase() + props.name.slice(1)} shirt`;
 
-  const getPrice = () => {
+  const getPrice = useMemo(() => {
     const selectedSize = props.sizes.find(size => size.name === currentSize);
     return props.basePrice + selectedSize.additionalPrice;
-  };
+  }, [props.basePrice, currentSize, props.sizes]);
 
   const handleAddToCart = () => {
     console.log("Summary");
